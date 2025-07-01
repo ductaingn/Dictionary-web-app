@@ -1,0 +1,135 @@
+.search-bar__container {
+  width: 100%;
+  height: 64px;
+
+  margin-top: 51.5px;
+  margin-bottom: 45px;
+
+  position: relative;
+}
+.search-bar__form {
+  width: 100%;
+  height: 100%;
+}
+.search-bar {
+  padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+
+  font-weight: 700;
+  color: var(--primary-text-clr);
+  font-size: var(--fs-heading-s);
+  background-color: var(--input-bg);
+
+  border-radius: 16px;
+  border: none;
+}
+.search-bar.search-bar--invalid-input {
+  outline: 1px solid var(--red);
+}
+.search-bar.search-bar--invalid-input:focus {
+  outline: 1px solid var(--red);
+}
+.search-bar::placeholder {
+  color: var(--primary-text-clr);
+  opacity: 0.4;
+  font-size: var(--fs-heading-s);
+  font-weight: 500;
+}
+.search-bar:focus {
+  outline: solid 2px var(--purple);
+}
+
+.search-bar__submit-btn {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+  margin: 0 auto;
+
+  right: 48px;
+  background: none;
+  border: none;
+}
+.search-bar__validation-error {
+  width: 100%;
+
+  align-self: flex-start;
+  margin: 0;
+  margin-top: 8px;
+  font-family: Inter;
+  font-size: var(--fs-heading-s);
+  font-style: normal;
+  font-weight: 400;
+  color: var(--red);
+  display: block;
+}
+
+.search-bar__input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-bar__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  background-color: black; /* match your background if defined */
+  border: 1px solid var(--rectangle-clr); /* match section separator */
+  border-radius: 8px;
+  margin-top: 8px;
+  z-index: 10;
+
+  list-style: none;
+  padding: 8px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Scrollbar Styling */
+.search-bar__dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.search-bar__dropdown::-webkit-scrollbar-track {
+  background: var(--rectangle-clr);
+  border-radius: 10px;
+}
+
+.search-bar__dropdown::-webkit-scrollbar-thumb {
+  background: var(--purple);
+  border-radius: 10px;
+}
+
+.search-bar__dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--purple);
+}
+
+.search-bar__dropdown-item {
+  padding: 20px 28px;
+  font-size: var(--fs-text-m);
+  color: var(--primary-text-clr);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-bar__dropdown-item:hover {
+  background-color: var(--purple);
+  color: white;
+}
+
+.search-bar__dropdown-item.active {
+  background-color: var(--purple);
+  color: white;
+}
+
+@media screen and (max-width: 375px) {
+  .search-bar {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,25 @@
+.error-page__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  text-align: center;
+}
+.error-page__emoji {
+  margin: 0;
+  margin-bottom: 44px;
+
+  font-family: "Roboto";
+  font-size: var(--fs-heading-l);
+}
+.error-page__title {
+  margin: 0;
+  margin-bottom: 24px;
+
+  font-size: var(--fs-heading-s);
+}
+.error-page__paragraph {
+  color: var(--secondary-text-clr);
+  font-size: var(--fs-text-m);
+}

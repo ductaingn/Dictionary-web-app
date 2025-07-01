@@ -1,0 +1,54 @@
+.header__dark-mode-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.header__dark-mode-checkbox {
+  transition: 0.3s ease-in-out;
+  appearance: none;
+}
+.header__dark-mode-icon {
+  transition: 0.3s ease-in-out;
+  margin-left: 20px;
+  stroke: #838383;
+}
+
+.header__dark-mode-checkbox:checked ~ .header__dark-mode-icon {
+  stroke: var(--purple);
+}
+.header__dark-mode-check {
+  transition: 0.3s ease-in-out;
+  position: relative;
+  display: block;
+
+  width: 40px;
+  height: 20px;
+
+  border-radius: 20px;
+  background-color: var(--secondary-text-clr);
+}
+
+.header__dark-mode-check::before {
+  transition: 0.3s ease-in-out;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 3px;
+  margin: auto;
+
+  width: 14px;
+  height: 14px;
+
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+.header__dark-mode-checkbox:checked + .header__dark-mode-check {
+  background-color: var(--purple);
+}
+.header__dark-mode-checkbox:checked + .header__dark-mode-check::before {
+  transform: translateX(150%);
+}

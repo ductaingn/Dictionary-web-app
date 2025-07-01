@@ -1,0 +1,9 @@
+.header__nav-separator {
+  display: inline-block;
+
+  background-color: var(--grayish);
+  width: 1px;
+  height: 32px;
+
+  margin: 0 26px;
+}

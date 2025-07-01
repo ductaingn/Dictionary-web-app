@@ -1,0 +1,150 @@
+.word__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.word {
+  font-size: var(--fs-heading-l);
+  margin: 0;
+}
+.word-audio {
+  width: 75px;
+  height: 75px;
+
+  border-radius: 50%;
+  border: none;
+  background: no-repeat url("../assets/images/icon-play.svg");
+}
+.word-audio:hover {
+  background: no-repeat url("../assets/images/icon-play-active.svg");
+}
+.word__phonetic {
+  margin: 0;
+  margin-top: 8px;
+
+  color: var(--purple);
+
+  font-size: var(--fs-heading-m);
+  font-weight: 400;
+}
+.word__part-of-speech {
+  margin: 42px 0px;
+  
+  font-size: var(--fs-heading-m);
+  font-weight: 700;
+  padding: 0.2em 0.4em;
+  border-radius: 12px;
+  display: inline-block;
+  color: var(--blue);
+  background-color: var(--yellow);
+}
+
+.word__meaning-section {
+  width: 100%;
+}
+.word__sub-title {
+  margin: 0;
+}
+
+.word__meanings {
+  list-style: none; /* Remove default bullets */
+}
+
+.word__meanings li::before {
+  content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: var(--purple); /* Change the color */
+  font-weight: bold; /* If you want it to be bold */
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 1.5rem;
+  margin-left: -1.5rem;
+}
+
+.word__meaning {
+  color: var(--primary-text-clr);
+  font-size: var(--fs-text-m);
+  line-height: 24px;
+
+  margin-bottom: 13px;
+}
+.word__meaning:last-child {
+  margin: 0;
+}
+.word__synonym-sub-title {
+  display: inline-block;
+  margin-right: 24px;
+}
+.word__synonym {
+  font-size: var(--fs-heading-s);
+  font-weight: 700;
+  color: var(--purple);
+  display: inline-block;
+}
+
+.word__source-section {
+  border-top: 1px solid var(--rectangle-clr);
+  padding-top: 20px;
+
+  margin-bottom: 15px;
+}
+.word__source {
+  margin-right: 21px;
+}
+
+.word__source-link {
+  color: var(--primary-text-clr);
+
+  font-size: var(--fs-text-s);
+}
+.word__source-link::after {
+  width: 12px;
+  height: 12px;
+
+  margin-left: 15px;
+  content: "";
+  display: inline-block;
+  background: no-repeat url("../assets/images/icon-new-window.svg");
+  background-position: center;
+  background-size: cover;
+}
+
+@media screen and (max-width: 375px) {
+  .word {
+    font-size: 32px;
+  }
+  .word-audio {
+    width: 48px;
+    height: 48px;
+
+    background-position: center;
+    background-size: cover;
+  }
+  .word-audio:hover {
+    width: 48px;
+    height: 48px;
+
+    background-position: center;
+    background-size: cover;
+  }
+  .word__phonetic {
+    font-size: var(--fs-text-m);
+  }
+  .word__part-of-speech {
+    font-size: var(--fs-text-m);
+  }
+  .word__sub-title {
+    font-size: 16px;
+  }
+  .word__meaning {
+    font-size: 15px;
+  }
+  .word__synonym {
+    font-size: 16px;
+  }
+  .word__source-section {
+    display: flex;
+    flex-direction: column;
+  }
+  .word__source {
+    margin-bottom: 8px;
+  }
+}
