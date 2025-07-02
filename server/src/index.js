@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 
 // Enable CORS + serve frontend
 app.use(cors());
-app.use(express.static(path.join(__dirname, "../../client/dist")));
+app.use(express.json());
 
 // Load the DB
 const idioms_db = new Database(path.join(__dirname, "database/idioms.db"));
