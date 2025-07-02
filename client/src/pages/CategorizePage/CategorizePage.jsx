@@ -43,8 +43,6 @@ function processCategoriesData(data) {
     }
   }
 
-  console.log("baseCategories+result", );
-
   return baseCategories.concat(result);
 }
 
