@@ -2,6 +2,7 @@ import { use } from "react";
 import "../../css/CategorizePage.css";
 import CategoriesList from "./CategoriesList";
 import { useState, useEffect } from "react";
+import baseCategories from "./baseCategories";
 
 function processCategoriesData(data) {
   const result = [];
@@ -42,7 +43,9 @@ function processCategoriesData(data) {
     }
   }
 
-  return result;
+  console.log("baseCategories+result", );
+
+  return baseCategories.concat(result);
 }
 
 const CategorizePage = () => {
