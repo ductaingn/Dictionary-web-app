@@ -33,10 +33,7 @@ app.get("/api/categories", (req, res) => {
   }
 });
 
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
-});
-
+// Start server
 app.listen(port, () => {
   console.log(`✅ Server running at http://localhost:${port}`);
 });
