@@ -10,7 +10,7 @@ const CategoriesList = ({ categories }) => {
           <div className="word__sub-categories-row">
             {category.sub_categories.map((sub_category, idx) => (
               <button className="sub-title sub-categories-btn" key={idx}>
-                {sub_category}
+                {sub_category.name}
               </button>
             ))}
           </div>
