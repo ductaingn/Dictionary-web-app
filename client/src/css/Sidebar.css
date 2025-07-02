@@ -67,5 +67,5 @@
 }
 
 .sidebar__close-btn:hover {
-  background-color: #a471df;
+  background-color: var(--purple);
 }

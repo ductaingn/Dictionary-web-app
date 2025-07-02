@@ -16,12 +16,16 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "../../client/dist")));
 
 // Load the DB
-const db = new Database(path.join(__dirname, "database/categories.db"));
+const idioms_db = new Database(path.join(__dirname, "database/idioms.db"));
+
+const categories_db = new Database(
+  path.join(__dirname, "database/categories.db")
+);
 
 // API route
-app.get("/api/words", (req, res) => {
+app.get("/api/categories", (req, res) => {
   try {
-    const rows = db.prepare("SELECT * FROM categories").all();
+    const rows = categories_db.prepare("SELECT * FROM categories").all();
     res.json(rows);
   } catch (err) {
     console.error("DB error:", err.message);

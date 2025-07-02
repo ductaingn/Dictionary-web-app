@@ -20,5 +20,6 @@
 }
 
 .sub-categories-btn:hover {
-  background-color: #a471df;
+  background-color: var(--purple);
+  color: white;
 }

@@ -1,88 +1,70 @@
+import { use } from "react";
 import "../../css/CategorizePage.css";
 import CategoriesList from "./CategoriesList";
+import { useState, useEffect } from "react";
+
+function processCategoriesData(data) {
+  const result = [];
+
+  if (!Array.isArray(data) || data.length === 0) {
+    return result; // Return empty array if data is not valid
+  }
+
+  // Iterate through the data to build the categories structure
+  for (const row of data) {
+    const category = row.category;
+    const sub_category = row.sub_category;
+    const sub_sub_category = row.sub_sub_category;
+    const idioms = row.idioms.trim().split(/\s+/);
+
+    // Find or create the main category
+    let mainCategory = result.find((cat) => cat.name === category);
+    if (!mainCategory) {
+      mainCategory = { name: category, sub_categories: [] };
+      result.push(mainCategory);
+    }
+
+    // Find or create the sub-category
+    let subCategory = mainCategory.sub_categories.find(
+      (subCat) => subCat.name === sub_category
+    );
+    if (!subCategory) {
+      subCategory = {
+        name: sub_category,
+        sub_sub_categories: [{ name: sub_sub_category, idioms: idioms }],
+      };
+      mainCategory.sub_categories.push(subCategory);
+    } else {
+      subCategory.sub_sub_categories.push({
+        name: sub_sub_category,
+        idioms: idioms,
+      });
+    }
+  }
+
+  return result;
+}
 
 const CategorizePage = () => {
-  const categories = [
-    {
-      name: "Theo chữ cái đầu",
-      sub_categories: Array.from({ length: 26 }, (_, index) =>
-        String.fromCharCode(65 + index)
-      ),
-    },
-    {
-      name: "Theo cấu trúc hình thức",
-      sub_categories: [
-        "AABB",
-        "AABC",
-        "ABAB",
-        "ABAC",
-        "ABCC",
-        "ABBC",
-        "ABCB",
-        "ABCA",
-      ],
-    },
-    {
-      name: "Theo kết cấu ngữ pháp",
-      sub_categories: [
-        "主谓式",
-        "动宾式",
-        "联合式",
-        "偏正式",
-        "连动式",
-        "补充式",
-        "紧缩式",
-        "复句式",
-        "复杂式",
-      ],
-    },
-    {
-      name: "Thành ngữ về con giáp",
-      sub_categories: ["A", "B"],
-    },
-    {
-      name: "Thành ngữ về tự nhiên",
-    },
-    {
-      name: "Thành ngữ về mùa",
-    },
-    {
-      name: "Thành ngữ về khí hậu",
-    },
-    {
-      name: "Thành ngữ về động vật",
-    },
-    {
-      name: "Thành ngữ về thực vật",
-    },
-    {
-      name: "Thành ngữ về thực phẩm",
-    },
-    {
-      name: "Thành ngữ về màu sắc",
-    },
-    {
-      name: "Thành ngữ về con số",
-    },
-    {
-      name: "Thành ngữ về bộ phận",
-    },
-    {
-      name: "Thành ngữ về cảm xúc",
-    },
-    {
-      name: "Thành ngữ về quân sự",
-    },
-    {
-      name: "Thành ngữ về phương vị",
-    },
-    {
-      name: "Thành ngữ có nguồn gốc điển cố",
-    },
-    {
-      name: "Thành ngữ khác",
-    },
-  ];
+  const [categoriesData, setCategoriesData] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/categories")
+      .then((res) => res.json())
+      .then((data) => {
+        setCategoriesData(data);
+        console.log(categoriesData);
+      })
+      .catch((err) => console.error("API fetch error:", err));
+  }, []);
+
+  useEffect(() => {
+    if (categoriesData.length > 0) {
+      const processedCategories = processCategoriesData(categoriesData);
+      setCategories(processedCategories);
+    }
+  }, [categoriesData]);
 
   return (
     <main className="main__container">
