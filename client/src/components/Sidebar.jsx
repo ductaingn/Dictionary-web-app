@@ -30,7 +30,7 @@ const Sidebar = ({ visible, onClick }) => {
         onClick={onClick}
         aria-label="Close sidebar"
       >
-        <img src="src/assets/images/icon-arrow-left.svg" />
+        <img src="/images/icon-arrow-left.svg" />
       </button>
     </div>
   );
