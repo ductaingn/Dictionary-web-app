@@ -13,7 +13,7 @@ const Header = () => {
     <header className="header">
       <div className="header__container">
         <Logo onClick={toggleSidebar} />
-        <p className="header__page_webcite_name">Từ điển thành ngữ tiếng Hán</p>
+        <p className="header__page_website_name">Từ điển thành ngữ tiếng Hán</p>
         <HeaderNav />
 
         <Sidebar

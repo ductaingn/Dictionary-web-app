@@ -56,7 +56,6 @@ const CategorizePage = () => {
       .then((res) => res.json())
       .then((data) => {
         setCategoriesData(data);
-        console.log(categoriesData);
       })
       .catch((err) => console.error("API fetch error:", err));
   }, []);
