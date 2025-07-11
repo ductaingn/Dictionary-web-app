@@ -1,9 +1,7 @@
 import "./css/App.css";
-import dataContext from "./contexts/dataContext";
 import Header from "./components/Header";
 import HomePage from "./pages/HomePage/HomePage";
 import ErrorPage from "./pages/ErrorPage";
-import SearchBar from "./components/SearchBar";
 import CategorizePage from "./pages/CategorizePage/CategorizePage";
 import BlogPage from "./pages/BlogPage/BlogPage";
 import { Routes, Route } from "react-router-dom";

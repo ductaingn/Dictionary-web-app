@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import "../css/SearchBar.css"
+import "../css/SearchBar.css";
 import dataContext from "../contexts/dataContext";
 import axios from "axios";
 
@@ -29,9 +29,11 @@ const SearchBar = () => {
     const fetchSuggestions = async () => {
       try {
         const response = await axios.get(
-          `https://api.datamuse.com/sug?s=${inputValue.trim()}`
+          `http://localhost:3001/api/idioms/suggestions/${encodeURIComponent(
+            inputValue.trim()
+          )}`
         );
-        setSuggestions(response.data.map((item) => item.word));
+        setSuggestions(response.data.map((item) => item.thanh_ngu_tieng_trung));
         setShowDropdown(true);
         setActiveIndex(-1);
       } catch (err) {
@@ -51,9 +53,9 @@ const SearchBar = () => {
       setIsInputValid(false);
     } else {
       fetchData(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue
-          .trim()
-          .toLowerCase()}`
+        `http://localhost:3001/api/idioms/${encodeURIComponent(
+          inputValue.trim()
+        )}`
       );
       setIsInputValid(true);
     }
@@ -65,7 +67,7 @@ const SearchBar = () => {
     setInputValue(word);
     setShowDropdown(false);
     fetchData(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${word.trim().toLowerCase()}`
+      `http://localhost:3001/api/idioms/${encodeURIComponent(inputValue)}`
     );
   };
 
@@ -87,9 +89,7 @@ const SearchBar = () => {
       setActiveIndex((prev) => (prev + 1) % suggestions.length);
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setActiveIndex((prev) =>
-        prev <= 0 ? suggestions.length - 1 : prev - 1
-      );
+      setActiveIndex((prev) => (prev <= 0 ? suggestions.length - 1 : prev - 1));
     } else if (e.key === "Enter") {
       if (activeIndex >= 0) {
         e.preventDefault();

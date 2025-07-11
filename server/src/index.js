@@ -23,6 +23,50 @@ const categories_db = new Database(
 );
 
 // API route
+// Idioms
+app.get("/api/idioms/:name", (req, res) => {
+  const name = req.params.name;
+
+  try {
+    const row = idioms_db
+      .prepare(
+        "SELECT * FROM idioms WHERE thanh_ngu_tieng_trung = ? COLLATE NOCASE"
+      )
+      .get(name);
+
+    if (row) {
+      res.json(row);
+    } else {
+      res.status(404).json({ error: "Idiom not found" });
+    }
+  } catch (err) {
+    console.error("DB error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Sugestions on type for idioms
+app.get("/api/idioms/suggestions/:name", (req, res) => {
+  const name = req.params.name;
+  try {
+    const rows = idioms_db
+      .prepare(
+        "SELECT thanh_ngu_tieng_trung FROM idioms WHERE thanh_ngu_tieng_trung LIKE ? COLLATE NOCASE LIMIT 10"
+      )
+      .all(`${name}%`);
+
+    if (rows.length > 0) {
+      res.json(rows);
+    } else {
+      res.status(404).json({ error: "No suggestions found" });
+    }
+  } catch (err) {
+    console.error("DB error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Idiom categories with idioms inside
 app.get("/api/categories", (req, res) => {
   try {
     const rows = categories_db.prepare("SELECT * FROM categories").all();

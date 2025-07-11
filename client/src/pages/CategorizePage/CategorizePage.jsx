@@ -49,7 +49,7 @@ function processCategoriesData(data) {
 const CategorizePage = () => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [categories, setCategories] = useState([]);
-  const API_BASE_URL = "https://dictionary-web-app-g4ut.onrender.com";
+  const API_BASE_URL = "http://localhost:3001";
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/categories`)
