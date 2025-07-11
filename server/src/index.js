@@ -37,7 +37,14 @@ app.get("/api/idioms/:name", (req, res) => {
     if (row) {
       res.json(row);
     } else {
-      res.status(404).json({ error: "Idiom not found" });
+      res.json({
+        thanh_ngu_tieng_trung: name,
+        found: false,
+        message: "Idiom not found in database.",
+        nghia: "",
+        phien_am: "",
+        am_han_viet: "",
+      });
     }
   } catch (err) {
     console.error("DB error:", err.message);
@@ -76,6 +83,67 @@ app.get("/api/categories", (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+app.get("/api/categories/:category", (req, res) => {
+  const category = req.params.category;
+  try {
+    const rows = categories_db
+      .prepare(
+        "SELECT idioms FROM categories WHERE category = ? COLLATE NOCASE"
+      )
+      .all(category);
+
+    if (rows.length > 0) {
+      res.json(rows);
+    } else {
+      res.status(404).json({ error: "Category not found" });
+    }
+  } catch (err) {
+    console.error("DB error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+app.get("/api/categories/:category/:subCategory", (req, res) => {
+  const { category, subCategory } = req.params;
+
+  try {
+    const rows = categories_db
+      .prepare(
+        "SELECT idioms FROM categories WHERE category = ? COLLATE NOCASE AND sub_category = ? COLLATE NOCASE"
+      )
+      .all(category, subCategory);
+
+    if (rows.length > 0) {
+      res.json(rows);
+    } else {
+      res.status(404).json({ error: "Subcategory not found" });
+    }
+  } catch (err) {
+    console.error("DB error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+app.get(
+  "/api/categories/:category/:subCategory/:subSubCategory",
+  (req, res) => {
+    const { category, subCategory, subSubCategory } = req.params;
+    try {
+      const rows = categories_db
+        .prepare(
+          "SELECT idioms FROM categories WHERE category = ? COLLATE NOCASE AND sub_category = ? COLLATE NOCASE AND sub_sub_category = ? COLLATE NOCASE"
+        )
+        .all(category, subCategory, subSubCategory);
+
+      if (rows.length > 0) {
+        res.json(rows);
+      } else {
+        res.status(404).json({ error: "Sub-subcategory not found" });
+      }
+    } catch (err) {
+      console.error("DB error:", err.message);
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
 
 // Start server
 app.listen(port, () => {

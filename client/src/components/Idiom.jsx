@@ -1,7 +1,5 @@
 import "../css/HomePage.css";
 
-import MeaningsList from "./MeaningsList";
-
 const IdiomAttribute = ({ label, children }) => {
   return (
     <div className="idiom__attribute">
@@ -65,12 +63,12 @@ const Idiom = ({ data }) => {
           <p>{data.chu_de}</p>
         </IdiomAttribute>
       )}
-      {data?.nguon_goc && (
+      {data?.nguon_goc_thanh_ngu && (
         <IdiomAttribute label="Nguồn gốc">
           <p>{data.nguon_goc_thanh_ngu}</p>
         </IdiomAttribute>
       )}
-      {data?.cau_chuyen && (
+      {data?.cau_chuyen_thanh_ngu && (
         <IdiomAttribute label="Câu chuyện thành ngữ">
           <p>{data.cau_chuyen_thanh_ngu}</p>
         </IdiomAttribute>

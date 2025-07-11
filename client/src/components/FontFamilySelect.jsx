@@ -1,5 +1,5 @@
 import changeBodyFontFamily from "../utils/changeBodyFontFamily";
-import "../css/FontFamilySelect.css"
+import "../css/FontFamilySelect.css";
 import { useState, useEffect, useRef } from "react";
 
 const FontFamilySelect = () => {
@@ -32,7 +32,7 @@ const FontFamilySelect = () => {
         <span className="select__btn-text">{selectValue}</span>
         <img
           className="select__btn-icon"
-          src=".\images\icon-arrow-down.svg"
+          src="\images\icon-arrow-down.svg"
           alt=""
         />
       </div>
