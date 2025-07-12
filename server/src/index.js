@@ -3,6 +3,7 @@ import cors from "cors";
 import Database from "better-sqlite3";
 import path from "path";
 import { fileURLToPath } from "url";
+import { posts } from "./database/blog/pages.js";
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -14,6 +15,9 @@ const __dirname = path.dirname(__filename);
 // Enable CORS + serve frontend
 app.use(cors());
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, "../public")));
+app.use("/assets", express.static(path.join(__dirname, "../public/assets")));
 
 // Load the DB
 const idioms_db = new Database(path.join(__dirname, "database/idioms.db"));
@@ -144,6 +148,26 @@ app.get(
     }
   }
 );
+
+// Blog posts
+app.get("/api/blog/posts", (req, res) => {
+  try {
+    res.json(posts);
+  } catch (err) {
+    console.error("DB error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/api/posts/:id", (req, res) => {
+  const id = req.params.id;
+  const post = posts.find((p) => p.id === id);
+  if (post) {
+    res.json(post);
+  } else {
+    res.status(404).json({ error: "Post not found" });
+  }
+});
 
 // Start server
 app.listen(port, () => {

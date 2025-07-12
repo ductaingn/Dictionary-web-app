@@ -1,0 +1,39 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.blog_post-thumbnail {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin: 1rem;
+  text-align: center;
+  border-radius: 8px;
+  transition: box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.blog_post-thumbnail:hover {
+  box-shadow: 0 4px 20px var(--yellow);
+}
+
+.blog_post-thumbnail__label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.blog_post-thumbnai__excerpt {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.blog_post-thumbnail__image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
