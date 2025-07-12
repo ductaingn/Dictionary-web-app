@@ -2,8 +2,6 @@ import MeaningDefinitions from "./MeaningDefinitions";
 import MeaningSynonyms from "./MeaningSynonyms";
 
 const MeaningsList = ({ meanings }) => {
-  console.log(meanings);
-
   return meanings.map((meaning) => {
     return (
       <section className="word__meaning-section" key={meaning.partOfSpeech}>

@@ -3,6 +3,7 @@ import "../../css/CategorizePage.css";
 import CategoriesList from "./CategoriesList";
 import { useState, useEffect } from "react";
 import baseCategories from "./baseCategories";
+import { API_URL } from "../../utils/api";
 
 function processCategoriesData(data) {
   const result = [];
@@ -49,10 +50,9 @@ function processCategoriesData(data) {
 const CategorizePage = () => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [categories, setCategories] = useState([]);
-  const API_BASE_URL = "http://localhost:3001";
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/categories`)
+    fetch(`${API_URL}/api/categories`)
       .then((res) => res.json())
       .then((data) => {
         setCategoriesData(data);

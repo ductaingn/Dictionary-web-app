@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import BlogPostThumbnail from "../../components/BlogPostThumbnail";
 import "../../css/BlogPage.css";
+import { API_URL } from "../../utils/api";
 
 const BlogPage = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/blog/posts")
+    fetch(`${API_URL}/api/blog/posts`)
       .then((res) => res.json())
       .then((data) => setPosts(data))
       .catch((err) => console.error("Failed to load posts:", err));

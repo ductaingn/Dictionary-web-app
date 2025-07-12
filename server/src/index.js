@@ -6,6 +6,8 @@ import { fileURLToPath } from "url";
 import { posts } from "./database/blog/pages.js";
 
 const app = express();
+const protocol = process.env.PROTOCOL || "http";
+const host = process.env.HOST || "localhost";
 const port = process.env.PORT || 3001;
 
 // Get __dirname in ESM
@@ -171,5 +173,5 @@ app.get("/api/posts/:id", (req, res) => {
 
 // Start server
 app.listen(port, () => {
-  console.log(`✅ Server running at http://localhost:${port}`);
+  console.log(`✅ Server running at ${protocol}://${host}:${port}`);
 });

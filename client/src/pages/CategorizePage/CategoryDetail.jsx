@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import "../../css/CategorizePage.css";
 import IdiomTag from "../../components/IdiomTag";
 import { use } from "react";
+import { API_URL } from "../../utils/api";
 
 const getIdiomAttributes = async (idioms) => {
   const results = await Promise.all(
     idioms.map(async (idiom) => {
       try {
         const res = await fetch(
-          `http://localhost:3001/api/idioms/${encodeURIComponent(idiom)}`
+          `${API_URL}/api/idioms/${encodeURIComponent(idiom)}`
         );
 
         if (res.ok) {
@@ -41,20 +42,17 @@ const getIdiomAttributes = async (idioms) => {
     })
   );
 
-  console.log(results);
-
   return results;
 };
 
 const CategoryDetail = () => {
   const { category, subCategory, subSubCategory } = useParams();
-  const API_BASE_URL = "http://localhost:3001";
   const [idioms, setIdioms] = useState([]);
   const [idiomsAttributes, setIdiomsAttributes] = useState({});
 
   useEffect(() => {
     fetch(
-      `${API_BASE_URL}/api/categories/${category}/${subCategory}/${
+      `${API_URL}/api/categories/${category}/${subCategory}/${
         subSubCategory || ""
       }`
     )

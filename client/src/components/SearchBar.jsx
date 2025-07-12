@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import "../css/SearchBar.css";
 import dataContext from "../contexts/dataContext";
 import axios from "axios";
+import { API_URL } from "../utils/api";
 
 const SearchBar = () => {
   const { data, setData, setError } = useContext(dataContext);
@@ -29,7 +30,7 @@ const SearchBar = () => {
     const fetchSuggestions = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/idioms/suggestions/${encodeURIComponent(
+          `${API_URL}/api/idioms/suggestions/${encodeURIComponent(
             inputValue.trim()
           )}`
         );
@@ -53,9 +54,7 @@ const SearchBar = () => {
       setIsInputValid(false);
     } else {
       fetchData(
-        `http://localhost:3001/api/idioms/${encodeURIComponent(
-          inputValue.trim()
-        )}`
+        `${API_URL}/api/idioms/${encodeURIComponent(inputValue.trim())}`
       );
       setIsInputValid(true);
     }
@@ -66,9 +65,7 @@ const SearchBar = () => {
     skipNextEffect.current = true;
     setInputValue(word);
     setShowDropdown(false);
-    fetchData(
-      `http://localhost:3001/api/idioms/${encodeURIComponent(inputValue)}`
-    );
+    fetchData(`${API_URL}/api/idioms/${encodeURIComponent(inputValue)}`);
   };
 
   const fetchData = (url) => {

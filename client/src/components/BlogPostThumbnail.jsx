@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import "../css/BlogPage.css";
+import { API_URL } from "../utils/api";
 
 const BlogPostThumbnail = ({ post }) => {
   return (
     <Link to={`/blog-page/${post.id}`}>
       <div className="blog_post-thumbnail">
         <img
-          src={`http://localhost:3001${post.thumbnail}`}
+          src={`${API_URL}${post.thumbnail}`}
           alt={post.title}
           className="blog_post-thumbnail__image"
         />
