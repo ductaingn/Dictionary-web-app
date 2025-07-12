@@ -11,15 +11,73 @@
   color: var(--blue);
   cursor: pointer;
 
-  /* Create half-circle: left half of a circle */
   border-radius: 4px;
-  /*         top-left  top-right  bottom-right bottom-left */
 
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
   transition: background-color 0.3s;
 }
 
 .sub-categories-btn:hover {
+  background-color: var(--purple);
+  color: white;
+}
+
+.idiom__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* space between idiom tags */
+}
+
+.idiom__tag {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--blue);
+  color: white;
+  border-radius: 28px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.idiom__tag:hover {
+  background-color: var(--yellow);
+}
+
+.idiom__tag-label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.idiom__tag-phonetic {
+  margin: 0;
+  margin-top: 8px;
+
+  color: var(--purple);
+
+  font-size: var(--fs-heading-m);
+  font-weight: 200;
+}
+
+.sub-sub-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  border-radius: 16px;
+  padding: 0.5rem;
+  background-color: var(--blue);
+  list-style-type: none;
+}
+
+.sub-sub-category-item {
+  padding: 4px;
+  border-radius: 4px;
+  background-color: var(--yellow);
+  color: var(--blue);
+  transition: background-color 0.3s;
+}
+.sub-sub-category-item:hover {
   background-color: var(--purple);
   color: white;
 }

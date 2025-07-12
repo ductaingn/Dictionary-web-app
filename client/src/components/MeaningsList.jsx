@@ -7,9 +7,7 @@ const MeaningsList = ({ meanings }) => {
       <section className="word__meaning-section" key={meaning.partOfSpeech}>
         <p className="word__part-of-speech">{meaning.partOfSpeech}</p>
 
-        <h2 className="word__sub-title sub-title">Meaning</h2>
-        <MeaningDefinitions meaning={meaning} />
-        <MeaningSynonyms meaning={meaning} />
+        <h2 className="word__sub-title sub-title">Nghĩa</h2>
       </section>
     );
   });

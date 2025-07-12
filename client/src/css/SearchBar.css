@@ -77,7 +77,7 @@
   left: 0;
   right: 0;
 
-  background-color: black; /* match your background if defined */
+  background-color: white;
   border: 1px solid var(--rectangle-clr); /* match section separator */
   border-radius: 8px;
   margin-top: 8px;

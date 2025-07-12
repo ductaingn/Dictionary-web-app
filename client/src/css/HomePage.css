@@ -29,7 +29,7 @@
 }
 .word__part-of-speech {
   margin: 42px 0px;
-  
+
   font-size: var(--fs-heading-m);
   font-weight: 700;
   padding: 0.2em 0.4em;
@@ -105,6 +105,25 @@
   background: no-repeat url("../assets/images/icon-new-window.svg");
   background-position: center;
   background-size: cover;
+}
+
+.idiom__attribute {
+  display: flex;
+  flex-direction: column;
+}
+
+.idiom__atttribute-label {
+  margin-top: 42px;
+  margin-bottom: 4px;
+  margin-right: 4px;
+
+  font-size: var(--fs-heading-m);
+  font-weight: 700;
+  padding: 0.2em 0.4em;
+  border-radius: 12px;
+  display: inline-block;
+  color: var(--blue);
+  background-color: var(--yellow);
 }
 
 @media screen and (max-width: 375px) {
