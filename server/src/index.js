@@ -4,6 +4,10 @@ import Database from "better-sqlite3";
 import path from "path";
 import { fileURLToPath } from "url";
 import { posts } from "./database/blog/pages.js";
+import baseCategories from "./database/baseCategories.js";
+import getBaseCategoryIdiomsQuery from "./utils/getBaseCategoryIdiomsQuery.js";
+import { get } from "https";
+import { json } from "stream/consumers";
 
 const app = express();
 const protocol = process.env.PROTOCOL || "http";
@@ -90,7 +94,9 @@ app.get("/api/categories", (req, res) => {
   }
 });
 app.get("/api/categories/:category", (req, res) => {
-  const category = req.params.category;
+  let category = req.params.category;
+  category = category.trim();
+
   try {
     const rows = categories_db
       .prepare(
@@ -109,14 +115,31 @@ app.get("/api/categories/:category", (req, res) => {
   }
 });
 app.get("/api/categories/:category/:subCategory", (req, res) => {
-  const { category, subCategory } = req.params;
+  let { category, subCategory } = req.params;
+  category = category.trim();
+  subCategory = subCategory.trim();
 
   try {
-    const rows = categories_db
-      .prepare(
-        "SELECT idioms FROM categories WHERE category = ? COLLATE NOCASE AND sub_category = ? COLLATE NOCASE"
-      )
-      .all(category, subCategory);
+    let rows = [];
+    const isBaseCategory = baseCategories.some(
+      (baseCategory) => baseCategory.name === category
+    );
+    if (isBaseCategory) {
+      // If the category is a base category, return its idioms
+      const queryObj = getBaseCategoryIdiomsQuery(category, subCategory);
+      if (!queryObj) {
+        return res.status(400).json({ error: "Invalid base category" });
+      }
+      const result = idioms_db.prepare(queryObj.query).all(...queryObj.params);
+      const idiomsList = result.map((row) => row.thanh_ngu_tieng_trung);
+      rows = [{ idioms: JSON.stringify(idiomsList) }];
+    } else {
+      rows = categories_db
+        .prepare(
+          "SELECT idioms FROM categories WHERE category = ? COLLATE NOCASE AND sub_category = ? COLLATE NOCASE"
+        )
+        .all(category, subCategory);
+    }
 
     if (rows.length > 0) {
       res.json(rows);
@@ -131,7 +154,10 @@ app.get("/api/categories/:category/:subCategory", (req, res) => {
 app.get(
   "/api/categories/:category/:subCategory/:subSubCategory",
   (req, res) => {
-    const { category, subCategory, subSubCategory } = req.params;
+    let { category, subCategory, subSubCategory } = req.params;
+    category = category.trim();
+    subCategory = subCategory.trim();
+    subSubCategory = subSubCategory ? subSubCategory.trim() : "";
     try {
       const rows = categories_db
         .prepare(
