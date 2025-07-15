@@ -2,14 +2,10 @@ import "../css/CategorizePage.css";
 import { useNavigate } from "react-router-dom";
 
 const IdiomTag = ({ idiom }) => {
+  const navigate = useNavigate();
+
   const handleNavigate = (idiomName) => {
-    // TODO
-    const base = `/categorize-page/${encodeURIComponent(
-      category
-    )}/${encodeURIComponent(subCategory)}`;
-    const fullPath = subSubCategory
-      ? `${base}/${encodeURIComponent(subSubCategory)}`
-      : base;
+    navigate(`/idiom/${encodeURIComponent(idiomName)}`);
   };
 
   return (

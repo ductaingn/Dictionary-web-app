@@ -2,8 +2,9 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../../css/CategorizePage.css";
 import IdiomTag from "../../components/IdiomTag";
-import { use } from "react";
 import { API_URL } from "../../utils/api";
+import Loading from "../../components/Loading";
+import ErrorPage from "../ErrorPage";
 
 const getIdiomAttributes = async (idioms) => {
   const results = await Promise.all(
@@ -49,8 +50,10 @@ const CategoryDetail = () => {
   const { category, subCategory, subSubCategory } = useParams();
   const [idioms, setIdioms] = useState([]);
   const [idiomsAttributes, setIdiomsAttributes] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     fetch(
       `${API_URL}/api/categories/${category}/${subCategory}/${
         subSubCategory || ""
@@ -79,6 +82,9 @@ const CategoryDetail = () => {
       .catch((err) => {
         console.error("API fetch error:", err);
         setIdioms([]);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [category, subCategory, subSubCategory]);
 
@@ -95,11 +101,17 @@ const CategoryDetail = () => {
       <h2>{decodeURIComponent(category)}</h2>
       <h3>{decodeURIComponent(subCategory)}</h3>
       {subSubCategory && <h4>{decodeURIComponent(subSubCategory)}</h4>}
-      <div className="idioms__list">
-        {idioms.map((idiom, index) => (
-          <IdiomTag key={index} idiom={idiomsAttributes[index]} />
-        ))}
-      </div>
+      {isLoading ? (
+        <Loading />
+      ) : idioms.length === 0 ? (
+        <ErrorPage />
+      ) : (
+        <div className="idioms__list">
+          {idioms.map((idiom, index) => (
+            <IdiomTag key={index} idiom={idiomsAttributes[index]} />
+          ))}
+        </div>
+      )}
     </main>
   );
 };

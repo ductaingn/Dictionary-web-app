@@ -3,6 +3,7 @@ import "../css/SearchBar.css";
 import dataContext from "../contexts/dataContext";
 import axios from "axios";
 import { API_URL } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
   const { data, setData, setError } = useContext(dataContext);
@@ -12,8 +13,10 @@ const SearchBar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const skipNextEffect = useRef(false);
+  const [typedValue, setTypedValue] = useState("");
 
   const inputRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (skipNextEffect.current) {
@@ -21,7 +24,7 @@ const SearchBar = () => {
       return;
     }
 
-    if (inputValue.trim() === "") {
+    if (typedValue.trim() === "") {
       setSuggestions([]);
       setShowDropdown(false);
       return;
@@ -31,7 +34,7 @@ const SearchBar = () => {
       try {
         const response = await axios.get(
           `${API_URL}/api/idioms/suggestions/${encodeURIComponent(
-            inputValue.trim()
+            typedValue.trim()
           )}`
         );
         setSuggestions(response.data.map((item) => item.thanh_ngu_tieng_trung));
@@ -46,17 +49,32 @@ const SearchBar = () => {
 
     const debounceTimer = setTimeout(fetchSuggestions, 300);
     return () => clearTimeout(debounceTimer);
-  }, [inputValue]);
+  }, [typedValue]);
+
+  useEffect(() => {
+    if (activeIndex >= 0 && activeIndex < suggestions.length) {
+      setInputValue(suggestions[activeIndex]);
+    } else {
+      setTypedValue(typedValue);
+    }
+  }, [activeIndex, suggestions]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!inputValue || inputValue.length === 0) {
+
+    const selectedIdiom =
+      activeIndex >= 0 && activeIndex < suggestions.length
+        ? suggestions[activeIndex]
+        : typedValue;
+
+    if (!selectedIdiom) {
       setIsInputValid(false);
     } else {
       fetchData(
         `${API_URL}/api/idioms/${encodeURIComponent(inputValue.trim())}`
       );
       setIsInputValid(true);
+      navigate(`/idiom/${encodeURIComponent(inputValue.trim())}`);
     }
     setShowDropdown(false);
   };
@@ -64,8 +82,11 @@ const SearchBar = () => {
   const handleSuggestionClick = (word) => {
     skipNextEffect.current = true;
     setInputValue(word);
+    setTypedValue(word);
+    setIsInputValid(true);
+    setActiveIndex(-1);
     setShowDropdown(false);
-    fetchData(`${API_URL}/api/idioms/${encodeURIComponent(inputValue)}`);
+    fetchData(`${API_URL}/api/idioms/${encodeURIComponent(word)}`);
   };
 
   const fetchData = (url) => {
@@ -83,17 +104,25 @@ const SearchBar = () => {
 
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setActiveIndex((prev) => (prev + 1) % suggestions.length);
+      setActiveIndex((prev) =>
+        prev + 1 >= suggestions.length ? suggestions.length - 1 : prev + 1
+      );
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setActiveIndex((prev) => (prev <= 0 ? suggestions.length - 1 : prev - 1));
+      setActiveIndex((prev) => (prev <= 0 ? -1 : prev - 1));
     } else if (e.key === "Enter") {
       if (activeIndex >= 0) {
         e.preventDefault();
-        handleSuggestionClick(suggestions[activeIndex]);
+        const selected =
+          activeIndex >= 0 && activeIndex < suggestions.length
+            ? suggestions[activeIndex]
+            : typedValue;
+        handleSuggestionClick(selected);
       }
     } else if (e.key === "Escape") {
       setShowDropdown(false);
+      setActiveIndex(-1);
+      setInputValue(typedValue); // Reset to typed value on escape
     }
   };
 
@@ -107,8 +136,19 @@ const SearchBar = () => {
           }`}
           placeholder="Nhập để tra cứu…"
           type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          value={
+            activeIndex >= 0 && activeIndex < suggestions.length
+              ? suggestions[activeIndex]
+              : typedValue
+          }
+          onChange={(e) => {
+            const val = e.target.value;
+            setInputValue(val);
+            setTypedValue(val);
+            setIsInputValid(val.trim() !== "");
+            setShowDropdown(val.trim() !== "" && suggestions.length > 0);
+            setActiveIndex(-1);
+          }}
           onFocus={() => setShowDropdown(suggestions.length > 0)}
           onKeyDown={handleKeyDown}
         />
@@ -128,11 +168,11 @@ const SearchBar = () => {
           </ul>
         )}
         <button className="search-bar__submit-btn" type="submit">
-          <img src="./images/icon-search.svg" alt="Search" />
+          <img src="/images/icon-search.svg" alt="Search" />
         </button>
         {!isInputValid && (
           <span className="search-bar__validation-error">
-            Whoops, can't be empty…
+            Không được để trống!
           </span>
         )}
       </form>
