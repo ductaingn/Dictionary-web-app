@@ -1,4 +1,5 @@
 import "../css/HomePage.css";
+import { useNavigate } from "react-router-dom";
 
 const IdiomAttribute = ({ label, children }) => {
   return (
@@ -10,6 +11,18 @@ const IdiomAttribute = ({ label, children }) => {
 };
 
 const Idiom = ({ data }) => {
+  const navigate = useNavigate();
+
+  const handleNavigate = (idiomName) => {
+    navigate(`/idiom/${encodeURIComponent(idiomName)}`);
+  };
+
+  const tu_can_nghia =
+    data?.tu_can_nghia?.split("、").map((item) => item.trim()) || [];
+
+  const tu_trai_nghia =
+    data?.tu_trai_nghia?.split("、").map((item) => item.trim()) || [];
+
   return (
     <main className="main__container">
       <div className="word__heading">
@@ -50,12 +63,32 @@ const Idiom = ({ data }) => {
       )}
       {data?.tu_can_nghia && (
         <IdiomAttribute label="Từ cận nghĩa">
-          <p>{data.tu_can_nghia}</p>
+          <ul className="idiom__attribute-synonym">
+            {tu_can_nghia.map((item, index) => (
+              <li
+                key={index}
+                onClick={() => handleNavigate(item)}
+                className="idiom__attribute-synonym-item"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
         </IdiomAttribute>
       )}
       {data?.tu_trai_nghia && (
         <IdiomAttribute label="Từ trái nghĩa">
-          <p>{data.tu_trai_nghia}</p>
+          <ul className="idiom__attribute-synonym">
+            {tu_trai_nghia.map((item, index) => (
+              <li
+                key={index}
+                onClick={() => handleNavigate(item)}
+                className="idiom__attribute-synonym-item"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
         </IdiomAttribute>
       )}
       {data?.chu_de && (
