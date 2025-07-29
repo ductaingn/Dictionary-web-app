@@ -62,7 +62,7 @@ const Idiom = ({ data }) => {
         </IdiomAttribute>
       )}
       {data?.tu_can_nghia && (
-        <IdiomAttribute label="Từ cận nghĩa">
+        <IdiomAttribute label="Thành ngữ gần nghĩa">
           <ul className="idiom__attribute-synonym">
             {tu_can_nghia.map((item, index) => (
               <li
@@ -77,7 +77,7 @@ const Idiom = ({ data }) => {
         </IdiomAttribute>
       )}
       {data?.tu_trai_nghia && (
-        <IdiomAttribute label="Từ trái nghĩa">
+        <IdiomAttribute label="Thành ngữ trái nghĩa">
           <ul className="idiom__attribute-synonym">
             {tu_trai_nghia.map((item, index) => (
               <li
