@@ -38,6 +38,11 @@ const Idiom = ({ data }) => {
             Kết cấu ngữ pháp: {data.ket_cau_ngu_phap}
           </div>
         )}
+        {data?.ket_cau_hinh_thuc && (
+          <div className="idiom__atttribute-label">
+            Kết cấu hình thức: {data.ket_cau_hinh_thuc}
+          </div>
+        )}
         {data?.sac_thai_bieu_cam && (
           <div className="idiom__atttribute-label">
             Sắc thái biểu cảm: {data.sac_thai_bieu_cam}
